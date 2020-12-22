@@ -29,7 +29,7 @@ public class WebServer {
 
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
         server.createContext("/companies",new Companies(companies));
-        server.createContext("/day", new DayHandler(companies));
+        server.createContext("/day", new DayHandler(companies,stockTrader));
         server.createContext("/buy", new StockBuyHandler(stockTrader));
         server.createContext("/sell", new StockSellHandler(stockTrader));
         server.createContext("/player", new PlayerHandler(player));
@@ -70,9 +70,11 @@ public class WebServer {
     }
     static class DayHandler implements HttpHandler {
         private ArrayList<Company> companies;
+        private StockTrader stockTrader;
 
-        public DayHandler(ArrayList<Company> companies) {
+        public DayHandler(ArrayList<Company> companies,StockTrader stockTrader) {
             this.companies = companies;
+            this.stockTrader = stockTrader;
         }
         public void handle(HttpExchange t) throws IOException {
             t.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
@@ -84,7 +86,8 @@ public class WebServer {
                 return;
             }
 
-            Stock.stockDayPrint(companies,1);
+            StockTrader.stockDayPrint(companies,1);
+            stockTrader.updateNetWorth();
             byte[] response = "Simulated 1 day".getBytes();
             t.sendResponseHeaders(200, response.length);
             OutputStream os = t.getResponseBody();

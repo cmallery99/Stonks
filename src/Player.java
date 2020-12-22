@@ -5,9 +5,11 @@ public class Player {
     public double cash;
     ArrayList<String> companyNames;
     HashMap<String,Integer> sharesMap = new HashMap<>();
+    public double netWorth;
 
     public Player(ArrayList<String> names,double cash) {
         this.cash = cash;
+        this.netWorth = cash;
         this.companyNames = names;
         int l = names.size();
 
@@ -51,6 +53,16 @@ public class Player {
 
     public HashMap<String,Integer> getAllShares() {
         return sharesMap;
+    }
+
+    public void updateNetWorth(ArrayList<Company> companies) {
+        double total = 0;
+        for (int i = 0; i < companies.size(); i++) {
+            total += (double)sharesMap.get(companies.get(i).getName()) * companies.get(i).getStockPrice();
+        }
+        total += this.cash;
+        total = Math.round(total*100.0) / 100.0;
+        this.netWorth = total;
     }
 
 }

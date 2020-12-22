@@ -47,4 +47,26 @@ public class StockTrader {
         return player.getShares(name);
     }
 
+    public void updateNetWorth() {
+        player.updateNetWorth(companies);
+    }
+
+    public static void stockDayPrint(ArrayList<Company> companies, int days) {
+        int l = companies.size() ;
+
+        for (int i = 0; i < days; i++) {
+            for (Company company : companies) {
+                double currentPrice = company.getStockPrice();
+                double newPrice = Stock.priceChange(currentPrice);
+                double change = Math.round((newPrice - currentPrice) * 100.0) / 100.0;
+                double changePercent = Math.round((newPrice / currentPrice - 1) * 100 * 100) / 100.0;
+
+                company.priceChange(newPrice);
+
+                System.out.println(company.getName() + ": " + company.getStockPrice() + " " + change + " " + changePercent + "%");
+            }
+            System.out.println();
+        }
+    }
+
 }
