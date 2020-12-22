@@ -32,6 +32,7 @@ public class WebServer {
         server.createContext("/day", new DayHandler(companies));
         server.createContext("/buy", new StockBuyHandler(stockTrader));
         server.createContext("/sell", new StockSellHandler(stockTrader));
+        server.createContext("/player", new PlayerHandler(player));
         server.setExecutor(null); // creates a default executor
         server.start();
     }
@@ -164,6 +165,40 @@ public class WebServer {
                 t.sendResponseHeaders(400, response.length);
             }
 
+            OutputStream os = t.getResponseBody();
+            os.write(response);
+            os.close();
+        }
+    }
+
+    static class PlayerHandler implements HttpHandler {
+        Player player;
+
+        public PlayerHandler(Player player) {
+            this.player = player;
+        }
+
+
+        public void handle(HttpExchange t) throws IOException {
+            t.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+
+            if (t.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
+                t.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, OPTIONS");
+                t.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type,Authorization");
+                t.sendResponseHeaders(204, -1);
+                return;
+            }
+
+            String json;
+            try {
+                json = new ObjectMapper().writeValueAsString(this.player);
+            } catch (Exception e) {
+                System.out.println("error");
+                e.printStackTrace();
+                json = "error";
+            }
+            byte[] response = json.getBytes();
+            t.sendResponseHeaders(200, response.length);
             OutputStream os = t.getResponseBody();
             os.write(response);
             os.close();

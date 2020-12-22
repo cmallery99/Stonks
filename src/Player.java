@@ -4,7 +4,7 @@ import java.util.HashMap;
 public class Player {
     public double cash;
     ArrayList<String> companyNames;
-    HashMap<String,Integer> shares = new HashMap<>();
+    HashMap<String,Integer> sharesMap = new HashMap<>();
 
     public Player(ArrayList<String> names,double cash) {
         this.cash = cash;
@@ -12,7 +12,7 @@ public class Player {
         int l = names.size();
 
         for (int i = 0; i < l; i++) {
-            shares.put(names.get(i),0);
+            sharesMap.put(names.get(i),0);
         }
 
     }
@@ -23,15 +23,15 @@ public class Player {
 
     // TODO Not thread safe
     public void buyShares(String name,int order, double cost) {
-        int newValue = shares.get(name) + order;
-        shares.replace(name,newValue);
+        int newValue = sharesMap.get(name) + order;
+        sharesMap.replace(name,newValue);
         cash -= cost;
     }
 
     // TODO Not thread safe
     public void sellShares(String name, int order, double cost) {
-        int newValue = shares.get(name) - order;
-        shares.replace(name,newValue);
+        int newValue = sharesMap.get(name) - order;
+        sharesMap.replace(name,newValue);
         cash += cost;
     }
 
@@ -44,7 +44,17 @@ public class Player {
     }
 
     public  int getShares(String name) {
-        return shares.getOrDefault(name, 0);
+        return sharesMap.getOrDefault(name, 0);
+    }
+
+    public ArrayList<String> getAllShares() {
+        ArrayList<String> sharesList = new ArrayList<>();
+
+        for (int i = 0; i < companyNames.size(); i++) {
+            sharesList.add(companyNames.get(i));
+            sharesList.add(Integer.toString(sharesMap.get(companyNames.get(i))));
+        }
+        return sharesList;
     }
 
 }
