@@ -25,22 +25,24 @@ public class Player {
     public void buyShares(String name,int order, double cost) {
         int newValue = sharesMap.get(name) + order;
         sharesMap.replace(name,newValue);
-        cash -= cost;
+        subtractCash(cost);
     }
 
     // TODO Not thread safe
     public void sellShares(String name, int order, double cost) {
         int newValue = sharesMap.get(name) - order;
         sharesMap.replace(name,newValue);
-        cash += cost;
+        addCash(cost);
     }
 
     public void addCash(double amount) {
         this.cash = this.cash + amount;
+        this.cash = Math.round(this.cash * 100.0) / 100.0;
     }
 
     public void subtractCash(double amount) {
         this.cash = this.cash - amount;
+        this.cash = Math.round(this.cash * 100.0) / 100.0;
     }
 
     public  int getShares(String name) {
