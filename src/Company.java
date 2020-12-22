@@ -24,12 +24,19 @@ public class Company {
         this.stockPrice = a;
     }
 
-    public double[] get7DayHistory() {
-        double [] a = new double[7];
+    public ArrayList<Double> getHistory(int days) {
         int l = priceHistory.size();
-        for (int i = 0; i < 7; i++) {
-            a[i] = priceHistory.get((l-1)-i);
+        if (l-1 >= days) {
+            ArrayList<Double> history = new ArrayList<>();
+            priceHistory.subList(l - 1 - days, l - 1);
+            return history;
         }
-        return a;
+        else {
+            throw new IllegalArgumentException("Not enough history");
+        }
+    }
+
+    public String toString() {
+        return name;
     }
 }

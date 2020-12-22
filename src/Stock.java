@@ -1,7 +1,10 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 public class Stock {
+    HashMap<String,Company> companyMap = new HashMap<>();
+
     public static String tickerGen() {
         Random rand = new Random();
 
@@ -57,7 +60,15 @@ public class Stock {
         return companies;
     }
 
-    public static void stockDayPrint(ArrayList<Company> companies,int days) {
+    public HashMap<String,Company> getCompanyMap(ArrayList<Company> companies) {
+        int l = companies.size();
+        for (int i = 0; i < l; i++) {
+            companyMap.put(companies.get(i).getName(),companies.get(i));
+        }
+        return companyMap;
+    }
+
+    public static void stockDayPrint(ArrayList<Company> companies, int days) {
         int l = companies.size() ;
 
         for (int i = 0; i < days; i++) {
@@ -75,7 +86,7 @@ public class Stock {
         }
     }
 
-    public static void stockDayNoPrint(ArrayList<Company> companies,int days) {
+    public static void stockDayNoPrint(ArrayList<Company> companies, int days) {
         int l = companies.size();
         double currentPrice;
         double newPrice;
@@ -102,6 +113,5 @@ public class Stock {
 
             System.out.println(company.getName() + ": " + company.getStockPrice() + " " + change + " " + changePercent + "%");
         }
-
     }
 }
