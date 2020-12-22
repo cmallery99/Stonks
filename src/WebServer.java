@@ -122,6 +122,7 @@ public class WebServer {
             try {
                 stockTrader.buyOrder(sb.toString().split(",")[0],Integer.parseInt(sb.toString().split(",")[1]));
                 response = "Buy Successful".getBytes();
+                stockTrader.updateNetWorth();
                 t.sendResponseHeaders(200, response.length);
             } catch (YouABrokeAssHoeException e) {
                 e.printStackTrace();
@@ -161,6 +162,7 @@ public class WebServer {
             try {
                 stockTrader.sellOrder(sb.toString().split(",")[0],Integer.parseInt(sb.toString().split(",")[1]));
                 response = "Sale Successful".getBytes();
+                stockTrader.updateNetWorth();
                 t.sendResponseHeaders(200, response.length);
             } catch (NotEnoughSharesException e) {
                 e.printStackTrace();
