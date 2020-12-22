@@ -49,14 +49,8 @@ public class Player {
         return sharesMap.getOrDefault(name, 0);
     }
 
-    public ArrayList<String> getAllShares() {
-        ArrayList<String> sharesList = new ArrayList<>();
-
-        for (int i = 0; i < companyNames.size(); i++) {
-            sharesList.add(companyNames.get(i));
-            sharesList.add(Integer.toString(sharesMap.get(companyNames.get(i))));
-        }
-        return sharesList;
+    public HashMap<String,Integer> getAllShares() {
+        return sharesMap;
     }
 
 }
