@@ -64,6 +64,7 @@ function simulateDay() {
         d3.select("svg").remove();
         setupD3();
         getPlayer();
+        getCompanies();
     });
   }
 }
@@ -92,11 +93,14 @@ function getCompanies() {
 
     $( "#companyList" ).html( html_text );
 
-    for (item in object) {
-      SELECTED_COMPANY = object[item]["name"];
-      $( "#companyInfoHeader" ).html( SELECTED_COMPANY );
-      break;
+    if (SELECTED_COMPANY === "") {
+      for (item in object) {
+        SELECTED_COMPANY = object[item]["name"];
+        $( "#companyInfoHeader" ).html( SELECTED_COMPANY );
+        break;
+      }
     }
+
   });
 }
 
