@@ -96,4 +96,8 @@ public class Stock {
             System.out.println(company.getName() + ": " + company.getStockPrice() + " " + change + " " + changePercent + "%");
         }
     }
+
+    public static double cashRound(double amount) {
+        return Math.round(amount * 100.0)/100.0;
+    }
 }

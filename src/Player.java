@@ -39,12 +39,12 @@ public class Player {
 
     public void addCash(double amount) {
         this.cash = this.cash + amount;
-        this.cash = Math.round(this.cash * 100.0) / 100.0;
+        this.cash = Stock.cashRound(this.cash);
     }
 
     public void subtractCash(double amount) {
         this.cash = this.cash - amount;
-        this.cash = Math.round(this.cash * 100.0) / 100.0;
+        this.cash = Stock.cashRound(this.cash);
     }
 
     public  int getShares(String name) {
@@ -61,8 +61,12 @@ public class Player {
             total += (double)sharesMap.get(companies.get(i).getName()) * companies.get(i).getStockPrice();
         }
         total += this.cash;
-        total = Math.round(total*100.0) / 100.0;
+        total = Stock.cashRound(total);
         this.netWorth = total;
+    }
+
+    public void cashMoney(double amount) {
+        addCash(amount);
     }
 
 }

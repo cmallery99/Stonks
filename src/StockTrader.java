@@ -28,7 +28,7 @@ public class StockTrader {
         }
     }
 
-    public void sellOrder(String name,int shares) throws NotEnoughSharesException{
+    public void sellOrder(String name,int shares) throws NotEnoughSharesException {
         if (companyMap.containsKey(name)) {
             if (player.getShares(name) >= shares) {
                 double price = companyMap.get(name).getStockPrice() * shares;
@@ -67,6 +67,10 @@ public class StockTrader {
             }
             System.out.println();
         }
+    }
+
+    public double getStockPrice(String companyName) {
+        return companyMap.get(companyName).getStockPrice();
     }
 
 }
