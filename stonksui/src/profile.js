@@ -1,7 +1,26 @@
+SIMULATE = true;
+URL = "http://localhost:8000/"
+COMPANY_ROUTE = URL + "companies"
+PLAYER_ROUTE = URL + "player"
+BUY_ROUTE = URL + "buy"
+SELL_ROUTE = URL + "sell"
+SIMULATE_ROUTE = URL + "day"
+
 $(document).ready(function(){
   setupD3();
   getPlayer();
   setInterval(simulateDay, 1000)
+
+  $("#startSimulator").click(function() {
+    console.log("start simulator clicked");
+    SIMULATE = true;
+  });
+
+  $("#stopSimulator").click(function() {
+    console.log("stop simulator clicked");
+    SIMULATE = false;
+  });
+
 });
 
 function getPlayer() {
@@ -32,19 +51,14 @@ function getPlayer() {
   });
 }
 
-URL = "http://localhost:8000/"
-COMPANY_ROUTE = URL + "companies"
-PLAYER_ROUTE = URL + "player"
-BUY_ROUTE = URL + "buy"
-SELL_ROUTE = URL + "sell"
-SIMULATE_ROUTE = URL + "day"
-
 function simulateDay() {
-  $.get( SIMULATE_ROUTE )
-    .done(function( data ) {
-      console.log(data);
-  });
-  getPlayer();
+  if (SIMULATE) {
+    $.get( SIMULATE_ROUTE )
+      .done(function( data ) {
+        console.log(data);
+    });
+    getPlayer();
+  }
 }
 
 

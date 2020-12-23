@@ -1,4 +1,5 @@
 SELECTED_COMPANY = "";
+SIMULATE = true;
 
 $(document).ready(function(){
   getCompanies();
@@ -7,19 +8,33 @@ $(document).ready(function(){
   setInterval(simulateDay, 1000)
 
   $("#buyStock").click(function() {
-    console.log("Buy button clicked");
-    $.post( BUY_ROUTE, SELECTED_COMPANY + ",1" )
+    var amount = $("#buyInput").val();
+    console.log("Buying " + amount + " shares of " + SELECTED_COMPANY);
+    $.post( BUY_ROUTE, SELECTED_COMPANY + "," + amount )
     .done(function( data ) {
       console.log(data);
+      getPlayer();
     });
   });
 
   $("#sellStock").click(function() {
-    console.log("Sell button clicked");
-    $.post( SELL_ROUTE, SELECTED_COMPANY + ",1" )
+    var amount = $("#sellInput").val();
+    console.log("Selling " + amount + " shares of " + SELECTED_COMPANY);
+    $.post( SELL_ROUTE, SELECTED_COMPANY + "," + amount )
     .done(function( data ) {
       console.log(data);
+      getPlayer();
     });
+  });
+
+  $("#startSimulator").click(function() {
+    console.log("start simulator clicked");
+    SIMULATE = true;
+  });
+
+  $("#stopSimulator").click(function() {
+    console.log("stop simulator clicked");
+    SIMULATE = false;
   });
 
 });
@@ -28,6 +43,8 @@ $(document).on('click', '.stockButton', function () {
     console.log("Stock button clicked")
     var stockCompany = $(this).val();
     SELECTED_COMPANY = stockCompany;
+    $( "#companyInfoHeader" ).html( SELECTED_COMPANY );
+    getPlayer();
     d3.select("svg").remove();
     setupD3();
 });
@@ -40,13 +57,15 @@ SELL_ROUTE = URL + "sell"
 SIMULATE_ROUTE = URL + "day"
 
 function simulateDay() {
-  $.get( SIMULATE_ROUTE )
-    .done(function( data ) {
-      console.log(data);
-      d3.select("svg").remove();
-      setupD3();
-      getPlayer();
-  });
+  if (SIMULATE) {
+    $.get( SIMULATE_ROUTE )
+      .done(function( data ) {
+        console.log(data);
+        d3.select("svg").remove();
+        setupD3();
+        getPlayer();
+    });
+  }
 }
 
 function getPlayer() {
@@ -54,10 +73,13 @@ function getPlayer() {
     var object = JSON.parse(data);
     $( "#cash" ).html( "$" + object["cash"] );
     $( "#netWorth" ).html( "$" + object["netWorth"] );
+    $( "#ownedShares" ).html( object["allShares"][SELECTED_COMPANY] );
   });
 }
 
 function getCompanies() {
+  // THIS SHOULD ONLY BE CALLED DURING PAGE LOAD
+
   $.get( COMPANY_ROUTE, function( data ) {
     var object = JSON.parse(data);
     var html_text = "";
@@ -71,7 +93,9 @@ function getCompanies() {
     $( "#companyList" ).html( html_text );
 
     for (item in object) {
-      SELECTED_COMPANY = object[item]["name"]
+      SELECTED_COMPANY = object[item]["name"];
+      $( "#companyInfoHeader" ).html( SELECTED_COMPANY );
+      break;
     }
   });
 }

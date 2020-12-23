@@ -37,6 +37,8 @@
           <p class="navbar-brand">Peter</p>
           <p class="navbar-brand">Cash: <span id="cash"></span></p>
           <p class="navbar-brand">Net Worth: <span id="netWorth"></span></p>
+          <p class="navbar-brand"><button id="startSimulator">Start Simulator</button></p>
+          <p class="navbar-brand"><button id="stopSimulator">Stop Simulator</button></p>
         </div>
     </nav>
 
@@ -54,14 +56,20 @@
         </div>
         <div class="col-sm-6 other">
           <div id="my_dataviz"></div>
-          <h3>More info here</h3>
+          <h3 id="companyInfoHeader"></h3>
 
           <hr>
 
+          <div>
+            <p>You own: <span id="ownedShares"></span> shares</p>
+          </div>
+
           <div class="col-sm-6 other">
+            <input type="text" id="buyInput" name="buyInput" value="1">
             <button id="buyStock">Buy</button>
           </div>
           <div class="col-sm-6 other">
+             <input type="text" id="sellInput" name="sellInput" value="1">
             <button id="sellStock">Sell</button>
           </div>
         </div>
