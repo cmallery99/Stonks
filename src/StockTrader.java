@@ -13,11 +13,17 @@ public class StockTrader {
         companyMap = stock.getCompanyMap(companies);
     }
 
-    public void buyOrder(String name, int shares) throws YouABrokeAssHoeException {
+    public void buyOrder(String name, int shares) throws YouABrokeAssHoeException,NotEnoughSharesException {
         if (companyMap.containsKey(name)) {
              double price = companyMap.get(name).getStockPrice() * shares;
              if (player.getCash() >= price) {
-                 player.buyShares(name,shares,price);
+                 if (companyMap.get(name).getAvailableShares() >= shares) {
+                     player.buyShares(name, shares, price);
+                     companyMap.get(name).subtractAvailableShares(shares);
+                 }
+                 else {
+                     throw new NotEnoughSharesException("not enough available shares");
+                 }
              }
              else {
                  throw new YouABrokeAssHoeException("You broke hoe");
@@ -33,6 +39,7 @@ public class StockTrader {
             if (player.getShares(name) >= shares) {
                 double price = companyMap.get(name).getStockPrice() * shares;
                 player.sellShares(name,shares,price);
+                companyMap.get(name).addAvailableShares(shares);
             }
             else {
                 throw new NotEnoughSharesException("not enough shares");

@@ -136,6 +136,10 @@ public class WebServer {
                 e.printStackTrace();
                 response = "You a broke hoe".getBytes();
                 t.sendResponseHeaders(400, response.length);
+            } catch (NotEnoughSharesException e) {
+                e.printStackTrace();
+                response = "not enough available shares".getBytes();
+                t.sendResponseHeaders(400, response.length);
             } catch (Exception e) {
                 e.printStackTrace();
                 response = "unknown exception".getBytes();

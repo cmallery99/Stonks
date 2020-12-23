@@ -6,6 +6,7 @@ public class Company {
     public double stockPrice;
     public int totalShares;
     public double marketCap;
+    public int availableShares;
     public ArrayList<Double> priceHistory = new ArrayList<>();
 
     public Company(String name, Double price, int totalShares) {
@@ -13,6 +14,7 @@ public class Company {
         this.stockPrice = price;
         this.totalShares = totalShares;
         this.marketCap = Stock.cashRound(price*(double)totalShares);
+        this.availableShares = totalShares;
     }
 
     public String getName() {
@@ -29,6 +31,10 @@ public class Company {
 
     public double getMarketCap() {
         return this.marketCap;
+    }
+
+    public int getAvailableShares() {
+        return this.availableShares;
     }
 
     public void priceChange(double newPrice) {
@@ -55,5 +61,13 @@ public class Company {
 
     public String toString() {
         return name;
+    }
+
+    public void addAvailableShares(int amount) {
+        this.availableShares += amount;
+    }
+
+    public void subtractAvailableShares(int amount) {
+        this.availableShares -= amount;
     }
 }

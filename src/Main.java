@@ -54,7 +54,11 @@ public class Main {
                         stockTrader.buyOrder(name,shareAmount);
                         break;
                     } catch (YouABrokeAssHoeException e) {
+                        e.printStackTrace();
                         System.out.println("You a broke hoe");
+                    } catch (NotEnoughSharesException e) {
+                        e.printStackTrace();
+                        System.out.println("Not enough available shares");
                     }
                 }
                 System.out.println("Successfully bought shares");
