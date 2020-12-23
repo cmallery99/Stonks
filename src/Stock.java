@@ -29,6 +29,13 @@ public class Stock {
 
     }
 
+    public static int initialShares() {
+        Random rand = new Random();
+        int a = rand.nextInt(2);
+        int[] shares = new int[]{10000,100000,1000000};
+        return shares[a];
+    }
+
     public static double priceChange(double a) {
         Random rand = new Random();
 
@@ -49,7 +56,8 @@ public class Stock {
         for (int i = 0; i < l; i++) {
             String companyName = Stock.tickerGen();
             double startingPrice = Stock.initialPrice();
-            Company c = new Company(companyName,startingPrice);
+            int totalShares = Stock.initialShares();
+            Company c = new Company(companyName,startingPrice,totalShares);
             companies.add(c);
         }
 
@@ -61,15 +69,13 @@ public class Stock {
     }
 
     public HashMap<String,Company> getCompanyMap(ArrayList<Company> companies) {
-        int l = companies.size();
-        for (int i = 0; i < l; i++) {
-            companyMap.put(companies.get(i).getName(),companies.get(i));
+        for (Company company : companies) {
+            companyMap.put(company.getName(), company);
         }
         return companyMap;
     }
 
     public static void stockDayNoPrint(ArrayList<Company> companies, int days) {
-        int l = companies.size();
         double currentPrice;
         double newPrice;
         double change;
@@ -79,9 +85,6 @@ public class Stock {
             for (Company company : companies) {
                 currentPrice = company.getStockPrice();
                 newPrice = Stock.priceChange(currentPrice);
-                change = Math.round((newPrice - currentPrice) * 100.0) / 100.0;
-                changePercent = Math.round((newPrice / currentPrice - 1) * 100 * 100) / 100.0;
-
                 company.priceChange(newPrice);
             }
         }

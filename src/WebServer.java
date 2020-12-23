@@ -41,7 +41,7 @@ public class WebServer {
     }
 
     static class Companies implements HttpHandler {
-        private ArrayList<Company> companies;
+        ArrayList<Company> companies;
         public Companies(ArrayList<Company> companies) {
             this.companies = companies;
         }
@@ -72,8 +72,8 @@ public class WebServer {
         }
     }
     static class DayHandler implements HttpHandler {
-        private ArrayList<Company> companies;
-        private StockTrader stockTrader;
+        ArrayList<Company> companies;
+        StockTrader stockTrader;
 
         public DayHandler(ArrayList<Company> companies,StockTrader stockTrader) {
             this.companies = companies;

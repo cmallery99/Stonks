@@ -4,11 +4,15 @@ public class Company {
 
     public String name;
     public double stockPrice;
+    public int totalShares;
+    public double marketCap;
     public ArrayList<Double> priceHistory = new ArrayList<>();
 
-    public Company(String name, Double price) {
+    public Company(String name, Double price, int totalShares) {
         this.name = name;
         this.stockPrice = price;
+        this.totalShares = totalShares;
+        this.marketCap = Stock.cashRound(price*(double)totalShares);
     }
 
     public String getName() {
@@ -19,9 +23,18 @@ public class Company {
         return this.stockPrice;
     }
 
-    public void priceChange(double a) {
+    public int getTotalShares() {
+        return this.totalShares;
+    }
+
+    public double getMarketCap() {
+        return this.marketCap;
+    }
+
+    public void priceChange(double newPrice) {
         priceHistory.add(this.stockPrice);
-        this.stockPrice = a;
+        this.stockPrice = newPrice;
+        this.updateMarketCap();
     }
 
     public ArrayList<Double> getHistory(int days) {
@@ -34,6 +47,10 @@ public class Company {
         else {
             throw new IllegalArgumentException("Not enough history");
         }
+    }
+
+    public void updateMarketCap() {
+        this.marketCap = Stock.cashRound(this.stockPrice*(double)this.totalShares);
     }
 
     public String toString() {
