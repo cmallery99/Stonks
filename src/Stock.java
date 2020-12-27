@@ -103,4 +103,8 @@ public class Stock {
     public static double cashRound(double amount) {
         return Math.round(amount * 100.0)/100.0;
     }
+
+    public void quarterTick() {
+        System.out.println("Quarter complete");
+    }
 }

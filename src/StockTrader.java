@@ -6,11 +6,13 @@ public class StockTrader {
     Player player;
     Stock stock = new Stock();
     HashMap<String, Company> companyMap;
+    int daysOfQuarter;
 
     public StockTrader(ArrayList<Company> companies, Player player) {
         this.companies = companies;
         this.player = player;
         companyMap = stock.getCompanyMap(companies);
+        daysOfQuarter = 0;
     }
 
     public void buyOrder(String name, int shares) throws YouABrokeAssHoeException,NotEnoughSharesException {
@@ -58,7 +60,7 @@ public class StockTrader {
         player.updateNetWorth(companies);
     }
 
-    public static void stockDayPrint(ArrayList<Company> companies, int days) {
+    public void stockDayPrint(ArrayList<Company> companies, int days) {
         int l = companies.size() ;
 
         for (int i = 0; i < days; i++) {
@@ -73,6 +75,11 @@ public class StockTrader {
                 System.out.println(company.getName() + ": " + company.getStockPrice() + " " + change + " " + changePercent + "%");
             }
             System.out.println();
+            this.daysOfQuarter++;
+            if (daysOfQuarter >= 90) {
+                stock.quarterTick();
+                daysOfQuarter = 0;
+            }
         }
     }
 

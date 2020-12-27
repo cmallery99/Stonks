@@ -32,7 +32,7 @@ public class Main {
                 String pn = in.next();
 
                 if (pn.equals("p")) {
-                    StockTrader.stockDayPrint(companies,l1);
+                    stockTrader.stockDayPrint(companies,l1);
                 }
                 else if (pn.equals("n")) {
                     Stock.stockDayNoPrint(companies,l1);

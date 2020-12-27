@@ -89,7 +89,7 @@ public class WebServer {
                 return;
             }
 
-            StockTrader.stockDayPrint(companies,1);
+            stockTrader.stockDayPrint(companies,1);
             stockTrader.updateNetWorth();
             byte[] response = "Simulated 1 day".getBytes();
             t.sendResponseHeaders(200, response.length);
