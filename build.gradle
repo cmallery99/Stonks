@@ -62,4 +62,6 @@ dependencies {
     runtimeOnly "org.lwjgl:lwjgl-opengl::$lwjglNatives"
     runtimeOnly "org.lwjgl:lwjgl-stb::$lwjglNatives"
     implementation "org.joml:joml:${jomlVersion}"
+
+    compile 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.9.3'
 }
