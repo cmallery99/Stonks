@@ -16,7 +16,7 @@ public class GameSceneInitializer extends SceneInitializer {
 
     @Override
     public void init(Scene scene) {
-        gameScene = scene.createGameObject("LevelEditor");
+        gameScene = scene.createGameObject("GameScene");
         gameScene.setNoSerialize();
         scene.addGameObjectToScene(gameScene);
     }

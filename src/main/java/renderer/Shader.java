@@ -29,9 +29,12 @@ public class Shader {
             String[] splitString = source.split("(#type)( )+([a-zA-Z]+)");
 
             int index = source.indexOf("#type") + 6;
+
+            // TODO: Git removes \r here - check either one?
             int eol = source.indexOf("\r\n", index);
             String firstPattern = source.substring(index, eol).trim();
 
+            // TODO: Git removes \r here - check either one?
             index = source.indexOf("#type", eol) + 6;
             eol = source.indexOf("\r\n", index);
             String secondPattern = source.substring(index, eol).trim();
