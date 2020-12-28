@@ -115,8 +115,8 @@ function setupD3() {
         var dataset = object[index]["priceHistory"];
 
     		var m = [80, 80, 10, 80]; // margins
-    		var w = 1000 - m[1] - m[3]; // width
-    		var h = 800 - m[0] - m[2]; // height
+    		var w = 600 - m[1] - m[3]; // width
+    		var h = 400 - m[0] - m[2]; // height
 
     		var x = d3.scaleLinear().domain([0, dataset.length]).range([0, w]);
     		var y = d3.scaleLinear().domain([d3.min(dataset), d3.max(dataset)]).range([h, 0]);

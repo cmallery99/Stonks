@@ -36,6 +36,12 @@ public class Stock {
         return shares[a];
     }
 
+    public static double initialDividend() {
+        Random rand = new Random();
+        int a = rand.nextInt(500);
+        return a/100.0;
+    }
+
     public static double priceChange(double a) {
         Random rand = new Random();
 
@@ -57,12 +63,13 @@ public class Stock {
             String companyName = Stock.tickerGen();
             double startingPrice = Stock.initialPrice();
             int totalShares = Stock.initialShares();
-            Company c = new Company(companyName,startingPrice,totalShares);
+            double initialDividend = Stock.initialDividend();
+            Company c = new Company(companyName,startingPrice,totalShares,initialDividend);
             companies.add(c);
         }
 
         for (int i = 0; i < l; i++) {
-            System.out.println(companies.get(i).getName() + ": " + companies.get(i).getStockPrice());
+            System.out.println(companies.get(i).getName() + ": " + companies.get(i).getStockPrice() + " " + companies.get(i).getDividendPercent() + "%");
         }
 
         return companies;
@@ -104,7 +111,4 @@ public class Stock {
         return Math.round(amount * 100.0)/100.0;
     }
 
-    public void quarterTick() {
-        System.out.println("Quarter complete");
-    }
 }

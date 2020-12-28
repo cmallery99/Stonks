@@ -72,12 +72,12 @@ public class StockTrader {
 
                 company.priceChange(newPrice);
 
-                System.out.println(company.getName() + ": " + company.getStockPrice() + " " + change + " " + changePercent + "%");
+                //System.out.println(company.getName() + ": " + company.getStockPrice() + " " + change + " " + changePercent + "%");
             }
-            System.out.println();
+            //System.out.println();
             this.daysOfQuarter++;
             if (daysOfQuarter >= 90) {
-                stock.quarterTick();
+                this.quarterTick();
                 daysOfQuarter = 0;
             }
         }
@@ -85,6 +85,25 @@ public class StockTrader {
 
     public double getStockPrice(String companyName) {
         return companyMap.get(companyName).getStockPrice();
+    }
+
+    public void quarterTick() {
+        System.out.println("Quarter complete");
+        this.payDividend();
+    }
+
+    public void payDividend() {
+        double total = 0;
+        for (int i = 0; i < companies.size(); i++) {
+            double shares = player.getShares(companies.get(i).toString());
+            if (shares > 0) {
+                double percent = (companies.get(i).getDividendPercent() / 4.0) / 100;
+                total += percent * companies.get(i).getStockPrice() * shares;
+            }
+        }
+        total = Stock.cashRound(total);
+        player.addCash(total);
+        System.out.println("Earned " + total + " in dividends this quarter");
     }
 
 }

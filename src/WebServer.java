@@ -183,7 +183,7 @@ public class WebServer {
                 stockTrader.sellOrder(companyName,shareAmount);
                 response = "Sale Successful".getBytes();
                 stockTrader.updateNetWorth();
-                //playerLog.addLogEntry("Sell",companyName,shareAmount,stockTrader.getStockPrice(companyName));
+                playerLog.addLogEntry("Sell",companyName,shareAmount,stockTrader.getStockPrice(companyName));
                 t.sendResponseHeaders(200, response.length);
             } catch (NotEnoughSharesException e) {
                 e.printStackTrace();
@@ -250,7 +250,7 @@ public class WebServer {
                 t.sendResponseHeaders(204, -1);
                 return;
             }
-            player.cashMoney(10000);
+            player.cashMoney(1000000000);
             byte[] response = "Money Money".getBytes();
             t.sendResponseHeaders(200, response.length);
             OutputStream os = t.getResponseBody();
